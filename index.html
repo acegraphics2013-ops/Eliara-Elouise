@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eliara Elouise's 1st Birthday | You're Invited</title>
+  <meta name="description" content="Join us in celebrating Eliara Elouise's 1st Birthday on October 18, 2026. Event details, milestone photos, RSVP and party guide." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav__brand" id="nav-brand">
+      <span class="nav__logo">E</span>
+      <span><strong>Eliara Elouise</strong><small>1st Birthday Celebration</small></span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="#details" id="nav-details">Details</a></li>
+      <li><a href="#journey" id="nav-journey">Journey</a></li>
+      <li><a href="#rsvp" id="nav-rsvp">RSVP</a></li>
+      <li><a href="#guide" id="nav-guide">Guide</a></li>
+    </ul>
+    <a href="#rsvp" class="btn btn--primary btn--sm" id="nav-cta">RSVP</a>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="hero">
+    <p class="pill fade-in">✿ You're invited to a sweet celebration ✿</p>
+    <div class="hero__avatar fade-in">
+      <img src="assets/11months.JPEG" alt="Eliara Elouise" />
+      <span class="hero__tag">Turning 1!</span>
+    </div>
+    <h1 class="hero__title fade-in">You're Invited to<br /><em>Eliara Elouise's</em> 1st Birthday!</h1>
+    <p class="hero__lead fade-in">Our little sunshine is turning one! Join us for an afternoon of love, laughter, cake and sweet memories as we celebrate Eliara's very first trip around the sun.</p>
+    <div class="hero__chips fade-in">
+      <span class="chip">📅 Sunday, October 18, 2026</span>
+      <span class="chip" id="hero-venue">📍 [Venue Name Placeholder]</span>
+    </div>
+    <div class="hero__actions fade-in">
+      <a href="#rsvp" class="btn btn--primary" id="hero-rsvp">RSVP Now</a>
+      <a href="#details" class="btn btn--ghost" id="hero-details">Event Details</a>
+      <a href="#journey" class="btn btn--ghost" id="hero-journey">Her Journey</a>
+    </div>
+    <a href="#countdown" class="hero__scroll fade-in" id="hero-scroll">Scroll ↓</a>
+
+    <div class="countdown-card fade-in" id="countdown">
+      <p class="pill pill--sm">⏳ Countdown to the party</p>
+      <div class="countdown">
+        <div><span id="cd-days">00</span><small>Days</small></div>
+        <div><span id="cd-hours">00</span><small>Hours</small></div>
+        <div><span id="cd-mins">00</span><small>Mins</small></div>
+        <div><span id="cd-secs">00</span><small>Secs</small></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ DETAILS ============ -->
+    <section class="section" id="details">
+      <p class="pill fade-in">🎀 Mark your calendar</p>
+      <h2 class="section__title fade-in">Party &amp; Event Details</h2>
+      <p class="section__subtitle fade-in">Everything you need to know to celebrate with us. Please arrive a little early so we can all sing together!</p>
+
+      <div class="detail-grid">
+        <article class="dcard dcard--active fade-in">
+          <span class="dcard__icon">📅</span>
+          <small>Date</small>
+          <h3>October 18, 2026</h3>
+          <p>Sunday afternoon</p>
+          <a href="#" class="dcard__link" id="add-calendar">Add to calendar →</a>
+        </article>
+        <article class="dcard fade-in">
+          <span class="badge">Time</span>
+          <span class="dcard__icon">⏰</span>
+          <small>Time</small>
+          <h3 id="event-time">2:00 PM – 5:00 PM</h3>
+          <p>Program starts at 2:30 PM</p>
+        </article>
+        <article class="dcard fade-in">
+          <span class="badge">Venue</span>
+          <span class="dcard__icon">📍</span>
+          <small>Venue</small>
+          <h3 id="event-venue">[Venue Name Placeholder]</h3>
+          <p id="event-address">[Street Address, City Placeholder]</p>
+          <a href="#" class="dcard__link" id="open-map">Open map →</a>
+        </article>
+        <article class="dcard fade-in">
+          <span class="badge">RSVP</span>
+          <span class="dcard__icon">💌</span>
+          <small>RSVP by</small>
+          <h3>October 10, 2026</h3>
+          <p>So we can prepare for everyone</p>
+          <a href="#rsvp" class="dcard__link" id="rsvp-link">RSVP now →</a>
+        </article>
+      </div>
+
+      <div class="info-bar fade-in">
+        <span class="info-bar__icon">🎈</span>
+        <div><strong>Theme: Pink Garden Party</strong><p>Pastel pinks, florals and soft whites are encouraged — but come as you are!</p></div>
+        <a href="#guide" class="btn btn--ghost btn--sm" id="info-guide">Party guide</a>
+      </div>
+
+      <div class="feature-grid">
+        <article class="fcard fade-in">
+          <h4>🌸 What to expect</h4>
+          <ul>
+            <li>Welcome snacks &amp; refreshments</li>
+            <li>Games for kids and grown-ups</li>
+            <li>Cake smash &amp; birthday song</li>
+            <li>Photo booth with props</li>
+          </ul>
+        </article>
+        <article class="fcard fade-in">
+          <h4>🎁 Gift notes</h4>
+          <p>Your presence is the best present! If you wish to bring something, books or a note for Eliara to read when she's older are treasured.</p>
+        </article>
+        <article class="fcard fade-in">
+          <h4>👗 Dress code</h4>
+          <p>Smart casual in pastel tones. Comfortable shoes recommended — part of the party is outdoors.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY / MILESTONE GALLERY ============ -->
+    <section class="section section--wide" id="journey">
+      <p class="pill fade-in">📸 Milestone Photo Gallery</p>
+      <h2 class="section__title fade-in">Eliara's First Year Journey</h2>
+      <p class="section__subtitle fade-in">Watch her blossom month by month! An auto-playing moving gallery capturing every tiny milestone, sweet smile, and joyful giggle from newborn to 11 months.</p>
+
+      <div class="view-toggle fade-in" id="view-toggle" role="tablist" aria-label="Gallery view">
+        <button class="view-btn is-active" data-view="marquee" id="view-marquee" role="tab" aria-selected="true">Moving Infinite Gallery</button>
+        <button class="view-btn" data-view="carousel" id="view-carousel" role="tab" aria-selected="false">Interactive Story Carousel</button>
+      </div>
+
+      <div class="gallery-bar fade-in">
+        <span class="gallery-count" id="milestone-count">All 12 Milestones (Newborn – 11 Months)</span>
+        <button class="btn btn--ghost btn--sm" id="pause-btn" aria-pressed="false">⏸ Pause Motion</button>
+      </div>
+
+      <div class="filters fade-in" id="filters">
+        <button class="filter is-active" data-filter="all" id="filter-all">All</button>
+        <button class="filter" data-filter="0-3" id="filter-0-3">0–3 Months</button>
+        <button class="filter" data-filter="4-7" id="filter-4-7">4–7 Months</button>
+        <button class="filter" data-filter="8-11" id="filter-8-11">8–11 Months</button>
+      </div>
+
+      <div class="gallery fade-in" id="gallery"></div>
+      <p class="gallery__hint" id="gallery-hint">💡 Hover or tap to pause the slider • Tap any picture to enlarge</p>
+
+      <!-- Interactive Story Carousel (Netlify-style second view) -->
+      <div class="carousel fade-in" id="carousel" hidden>
+        <button class="car-arrow" id="car-prev" aria-label="Previous photo">‹</button>
+        <figure class="car-card" id="car-card">
+          <div class="car-media">
+            <img id="car-image" src="assets/0newborn.JPEG" alt="Eliara milestone photo" />
+            <span class="car-badge" id="car-badge">0 Month (Newborn)</span>
+          </div>
+          <figcaption>
+            <h3 id="car-title">Welcome to the World</h3>
+            <p id="car-desc"></p>
+            <span class="car-counter" id="car-counter">1 / 12</span>
+          </figcaption>
+        </figure>
+        <button class="car-arrow" id="car-next" aria-label="Next photo">›</button>
+        <div class="car-dots" id="car-dots"></div>
+      </div>
+
+      <!-- Lightbox (tap any picture to enlarge) -->
+      <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Milestone photo viewer">
+        <div class="lightbox__backdrop" id="lightbox-backdrop"></div>
+        <figure class="lightbox__card">
+          <button class="lightbox__close" id="lightbox-close" aria-label="Close">✕</button>
+          <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="Previous">‹</button>
+          <div class="lightbox__media">
+            <img id="lightbox-img" src="" alt="" />
+            <span class="car-badge" id="lightbox-badge"></span>
+          </div>
+          <figcaption>
+            <h3 id="lightbox-title"></h3>
+            <p id="lightbox-desc"></p>
+            <span class="car-counter" id="lightbox-counter"></span>
+          </figcaption>
+          <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="Next">›</button>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ RSVP ============ -->
+    <section class="section" id="rsvp">
+      <div class="rsvp-card fade-in">
+        <p class="pill">💌 Kindly reply</p>
+        <h2 class="section__title">RSVP</h2>
+        <p class="section__subtitle">Please let us know if you can join by <strong>October 10, 2026</strong>.</p>
+
+        <form class="form" id="rsvp-form" novalidate>
+          <fieldset class="choices">
+            <legend>Will you be joining us?</legend>
+            <label class="choice">
+              <input type="radio" name="attendance" value="coming" id="rsvp-coming" />
+              <span><strong>🎉 Yes, I'll be there!</strong><small>Can't wait to celebrate</small></span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="attendance" value="not-coming" id="rsvp-not-coming" />
+              <span><strong>💌 Sadly, I can't</strong><small>Will be there in spirit</small></span>
+            </label>
+          </fieldset>
+          <div class="grid-2">
+            <label class="field"><span>Guest name(s)</span>
+              <input type="text" id="guest-name" name="guestName" placeholder="e.g. Juan &amp; Maria Dela Cruz" /></label>
+            <label class="field"><span>Number attending</span>
+              <input type="number" id="guest-count" name="guestCount" min="1" max="20" value="1" /></label>
+            <label class="field"><span>Email or phone</span>
+              <input type="text" id="guest-contact" name="contact" placeholder="So we can reach you" /></label>
+            <label class="field"><span>Kids attending</span>
+              <input type="number" id="guest-kids" name="kids" min="0" max="10" value="0" /></label>
+          </div>
+          <label class="field"><span>Message for Eliara (optional)</span>
+            <textarea id="guest-message" name="message" rows="3" placeholder="Write a sweet birthday wish…"></textarea></label>
+          <p class="form-error" id="form-error" role="alert"></p>
+          <button type="submit" class="btn btn--primary btn--block" id="rsvp-submit">Send my RSVP 💖</button>
+        </form>
+
+        <div class="success" id="rsvp-success" hidden>
+          <div class="success__icon">💖</div>
+          <h3>Thank you!</h3>
+          <p id="success-msg"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GUIDE ============ -->
+    <section class="section" id="guide">
+      <p class="pill fade-in">📖 Good to know</p>
+      <h2 class="section__title fade-in">Helpful Party Guide</h2>
+      <p class="section__subtitle fade-in">A few answers to make your day smooth and stress-free.</p>
+      <div class="guide">
+        <aside class="guide__card fade-in">
+          <span class="dcard__icon">🍰</span>
+          <small class="eyebrow">Host's note</small>
+          <h3>Bring a Smile, Leave with a Treat</h3>
+          <p>We've prepared food, drinks and little giveaways for every guest. Just bring your best birthday cheer!</p>
+          <ul>
+            <li>✔ Parking available on site</li>
+            <li>✔ Baby-changing area provided</li>
+          </ul>
+        </aside>
+        <div class="faq fade-in" id="faq">
+          <details open><summary>Can I bring my kids?</summary><p>Absolutely! Little ones are very welcome — we have games and treats ready for them.</p></details>
+          <details><summary>Is there parking at the venue?</summary><p>Yes, free parking is available. Please follow the signs at the entrance.</p></details>
+          <details><summary>What time should I arrive?</summary><p>Doors open at 2:00 PM; the program begins at 2:30 PM.</p></details>
+          <details><summary>Who do I contact for questions?</summary><p>Just add your question to your RSVP message above and we'll get back to you.</p></details>
+          <p class="faq__note">💡 Still have questions? <a href="#rsvp" id="faq-contact">Message the host →</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <span class="nav__logo">E</span>
+    <h3>Eliara Elouise is Turning ONE!</h3>
+    <p>Thank you for being part of our little one's first year. 💕</p>
+    <ul class="footer__links">
+      <li><a href="#details">Details</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+      <li><a href="#guide">Guide</a></li>
+    </ul>
+    <small>With love, Eliara's Family · October 18, 2026</small>
+    <p class="footer__credit">Designed &amp; developed by
+      <a href="https://acecreatives.vercel.app/" target="_blank" rel="noopener" id="dev-portfolio">Ace Creatives ↗</a>
+    </p>
+  </footer>
+
+  <a href="#hero" class="to-top" id="to-top" aria-label="Back to top">↑</a>
+  <script src="script.js"></script>
+</body>
+</html>
