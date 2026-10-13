@@ -75,6 +75,10 @@ em { font-style: italic; }
   width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
   background: var(--grad); color: #fff; font-family: 'Playfair Display', serif; font-weight: 700;
 }
+.nav__logo--img {
+  display: block; object-fit: cover; border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--pink-200);
+}
 .nav__links { display: flex; gap: 28px; list-style: none; font-size: .85rem; color: var(--muted); }
 .nav__links a { position: relative; transition: color .2s; }
 .nav__links a::after {
@@ -269,7 +273,8 @@ em { font-style: italic; }
   width: min(420px, 86vw); background: #fff; border: 1px solid #FBCFE2; border-radius: 24px;
   padding: 14px 14px 20px; box-shadow: var(--shadow); text-align: center; animation: pop .35s ease;
 }
-.car-media { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid #F9D0E2; aspect-ratio: 1/1; background: #FAF5EC; }
+.car-media { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid #F9D0E2; aspect-ratio: 1/1; background: #FAF5EC; touch-action: pan-y; cursor: grab; }
+.car-media:active { cursor: grabbing; }
 .car-media img { width: 100%; height: 100%; object-fit: cover; }
 .car-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin: 14px 0 4px; }
 .car-card p { font-size: .85rem; color: var(--muted); max-width: 34ch; margin: 0 auto; }
@@ -291,7 +296,7 @@ em { font-style: italic; }
   position: relative; width: min(440px, 94vw); background: #fff; border-radius: 24px; padding: 14px 14px 20px;
   text-align: center; box-shadow: 0 30px 80px rgba(0,0,0,.35); animation: pop .3s ease; max-height: 92vh; overflow: auto;
 }
-.lightbox__media { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid #F9D0E2; background: #FAF5EC; }
+.lightbox__media { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid #F9D0E2; background: #FAF5EC; touch-action: pan-y; }
 .lightbox__media img { width: 100%; max-height: 52vh; object-fit: cover; }
 .lightbox__card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin: 14px 0 4px; }
 .lightbox__card p { font-size: .84rem; color: var(--muted); }

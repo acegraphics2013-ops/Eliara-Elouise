@@ -193,16 +193,68 @@ const ASSET_PATH = 'assets/';
 
   if (pauseBtn) pauseBtn.addEventListener('click', () => setPaused(!isPaused));
 
-  document.getElementById('car-prev').addEventListener('click', () => { carIndex = (carIndex - 1 + list().length) % list().length; renderCarousel(); });
-  document.getElementById('car-next').addEventListener('click', () => { carIndex = (carIndex + 1) % list().length; renderCarousel(); });
+  document.getElementById('car-prev').addEventListener('click', () => stepCar(-1));
+  document.getElementById('car-next').addEventListener('click', () => stepCar(1));
+  function stepCar(d) {
+    const n = list().length;
+    if (!n) return;
+    carIndex = (carIndex + d + n) % n;
+    renderCarousel();
+  }
   document.getElementById('car-dots').addEventListener('click', e => {
     const d = e.target.closest('[data-dot]');
     if (!d) return;
     carIndex = parseInt(d.dataset.dot, 10);
     renderCarousel();
   });
-  // Clicking the carousel photo also enlarges it
-  document.getElementById('car-card').addEventListener('click', () => openLightbox(carIndex));
+  // Swipe / drag support for mobile (carousel + lightbox)
+  // Horizontal swipe navigates, vertical scroll stays native via touch-action: pan-y
+  function addSwipe(el, onLeft, onRight, threshold = 45) {
+    if (!el) return;
+    let startX = 0, startY = 0, tracking = false;
+    el.addEventListener('touchstart', e => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+    el.addEventListener('touchend', e => {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold) {
+        el.dataset.swiped = String(Date.now());
+        if (dx < 0) onLeft();
+        else onRight();
+      }
+    }, { passive: true });
+    el.addEventListener('touchcancel', () => { tracking = false; }, { passive: true });
+  }
+  function wasJustSwiped(el, ms = 350) {
+    const t = parseInt(el.dataset.swiped || '0', 10);
+    return Date.now() - t < ms;
+  }
+  const carCard = document.getElementById('car-card');
+  addSwipe(carCard, () => stepCar(1), () => stepCar(-1));
+  // Keyboard arrows for carousel when visible (desktop a11y)
+  document.addEventListener('keydown', e => {
+    if (currentView !== 'carousel') return;
+    if (carousel.hidden) return;
+    if (!lightbox.hidden) return; // lightbox has its own handler
+    if (e.key === 'ArrowLeft') stepCar(-1);
+    if (e.key === 'ArrowRight') stepCar(1);
+  });
+  // Clicking the carousel photo also enlarges it (suppressed right after a swipe)
+  carCard.addEventListener('click', () => {
+    if (wasJustSwiped(carCard)) return;
+    openLightbox(carIndex);
+  });
+  // Swipe on lightbox image too
+  addSwipe(document.getElementById('lightbox'),
+    () => stepLightbox(1),
+    () => stepLightbox(-1));
 
   document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
   document.getElementById('lightbox-backdrop').addEventListener('click', closeLightbox);
