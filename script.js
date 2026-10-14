@@ -1,13 +1,13 @@
 /* =========================================================
    CONFIG — edit these values to update the site
    ========================================================= */
-const EVENT_DATE = new Date('2026-10-18T10:00:00+08:00'); // ✏️ update time here too
-const HOST_EMAIL = 'marchille13@gmail.com'; // ✏️ contact + RSVP messages are emailed here
+const EVENT_DATE = new Date('2026-10-18T10:00:00+08:00'); // update time here too
+const HOST_EMAIL = 'marchille13@gmail.com'; // contact + RSVP messages are emailed here
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + HOST_EMAIL;
 
 // Milestone photos — MONTH IS DERIVED FROM FILENAME (single source of truth)
 // Filenames live in /assets. Leading number = month (0 = newborn, 1..12).
-// ✏️ To add/replace a photo, just drop the file in /assets and add its exact
+// To add/replace a photo, just drop the file in /assets and add its exact
 // filename below — badge, sorting, navigator and counter update automatically.
 // Order below does not matter: PHOTOS is always re-sorted 0 → 12 by filename number.
 const PHOTO_FILES = [
@@ -85,7 +85,7 @@ const ASSET_PATH = 'assets/';
       <figure class="photo" data-index="${i}"${hidden ? ' aria-hidden="true"' : ''} tabindex="${hidden ? '-1' : '0'}" role="button" aria-label="Enlarge ${p.badge} photo">
         <div class="photo__media">
           <img src="${src(p)}" alt="${p.badge} - ${p.title}" loading="lazy" draggable="false" onerror="this.style.opacity='0'" />
-          <div class="photo__zoom" aria-hidden="true"><span>⤢</span></div>
+          <div class="photo__zoom" aria-hidden="true"><span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></div>
           <div class="photo__badge">${p.badge}</div>
         </div>
         <h4>${p.title}</h4>
@@ -135,10 +135,12 @@ const ASSET_PATH = 'assets/';
     else { box.hidden = true; if (hint) hint.hidden = true; carousel.hidden = false; renderCarousel(); }
   }
 
+  const ICON_PAUSE = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg> Pause Motion';
+  const ICON_PLAY = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.5v15l13-7.5-13-7.5z"/></svg> Resume Motion';
   function setPaused(v) {
     isPaused = v;
     pauseBtn.setAttribute('aria-pressed', String(v));
-    pauseBtn.textContent = v ? '▶ Resume Motion' : '⏸ Pause Motion';
+    pauseBtn.innerHTML = v ? ICON_PLAY : ICON_PAUSE;
     const track = box.querySelector('.gallery__track');
     if (track) track.classList.toggle('is-paused', v);
   }
@@ -316,7 +318,7 @@ const ASSET_PATH = 'assets/';
   if (!link) return;
   const title = "Eliara Elouise's 1st Birthday (Fairy Theme)";
   const location = 'JBT Resort, Victoria, Tago, Surigao del Sur';
-  const details = 'Fairy First Birthday \u2022 Games, souvenirs & photo op \u2022 Casual attire';
+  const details = 'Fairy First Birthday - Games, souvenirs & photo op - Casual attire';
   const start = EVENT_DATE;
   const end = new Date(start.getTime() + 3 * 36e5); // assumed 3-hour party
   const fmt = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -404,10 +406,10 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   function setSending(btn, sending) {
     if (!btn) return null;
     if (sending) {
-      btn.dataset.label = btn.textContent;
+      btn.dataset.label = btn.innerHTML;
       btn.disabled = true;
-      btn.textContent = 'Sending… ⏳';
-      return () => { btn.disabled = false; btn.textContent = btn.dataset.label; };
+      btn.textContent = 'Sending…';
+      return () => { btn.disabled = false; btn.innerHTML = btn.dataset.label; };
     }
     return null;
   }
@@ -424,7 +426,7 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   function mailtoFallback(subject, body) {
     const url = 'mailto:' + HOST_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    return 'Could not send automatically. <a href="' + url + '">Click here to send via your email app →</a>';
+    return 'Could not send automatically. <a href="' + url + '">Click here to send via your email app</a>';
   }
 
   rsvpForm.addEventListener('change', e => {
@@ -451,7 +453,7 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     const payload = {
       _subject: subject,
       Form: 'RSVP',
-      Attendance: attendance === 'coming' ? 'Coming 🎉' : 'Not coming 💌',
+      Attendance: attendance === 'coming' ? 'Coming' : 'Not coming',
       'Guest name(s)': name,
       'Number attending': data.get('guestCount') || count,
       'Email / phone': data.get('contact') || '',
@@ -462,7 +464,7 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
       await sendToHost(payload);
       showSuccess(rsvpForm, attendance === 'coming'
         ? `Thank you, ${name}! Your RSVP was sent to ${HOST_EMAIL}. (${count} guest${count > 1 ? 's' : ''})`
-        : `Thank you, ${name}! Your message was sent to ${HOST_EMAIL}. We'll miss you! 💕`);
+        : `Thank you, ${name}! Your message was sent to ${HOST_EMAIL}. We'll miss you!`);
     } catch (err) {
       console.warn('RSVP send failed:', err);
       const body = Object.entries(payload).map(([k, v]) => k + ': ' + v).join('\n');
