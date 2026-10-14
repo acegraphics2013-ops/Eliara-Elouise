@@ -1,7 +1,7 @@
 /* =========================================================
    CONFIG — edit these values to update the site
    ========================================================= */
-const EVENT_DATE = new Date('2026-10-18T14:00:00'); // ✏️ update time here too
+const EVENT_DATE = new Date('2026-10-18T10:00:00'); // ✏️ update time here too
 const HOST_EMAIL = 'marchille13@gmail.com'; // ✏️ contact + RSVP messages are emailed here
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + HOST_EMAIL;
 
@@ -22,6 +22,7 @@ const PHOTO_FILES = [
   { file: '9months.JPEG',   title: 'Bye-Bye & Wave Hello', note: 'Mastered waving little hello and goodbye hands, babbling "mama" and "dada".' },
   { file: '10 months.JPEG', title: 'Cruising & Dancing', note: 'Cruising along furniture with confidence, dancing whenever music starts.' },
   { file: '11months.JPEG',  title: 'Almost ONE Year Old!', note: 'Standing proudly on her own two feet, counting down the days to her 1st Birthday celebration!' },
+  { file: '12months.JPG',   title: 'Happy 1st Birthday!', note: 'One whole year of magic, wonder and love — our little fairy is officially ONE!' },
 ];
 
 /* Filename → month helpers (handles "0newborn", "1month", "2 months", "10 months", etc.) */
@@ -29,11 +30,12 @@ function parseMonthFromFilename(file) {
   const m = String(file || '').match(/(\d+)/);
   if (!m) return 0;
   const n = parseInt(m[1], 10);
-  return Number.isFinite(n) ? Math.min(11, Math.max(0, n)) : 0;
+  return Number.isFinite(n) ? Math.min(12, Math.max(0, n)) : 0;
 }
 function monthBadge(month) {
   if (month === 0) return '0 Month (Newborn)';
   if (month === 1) return '1 Month Old';
+  if (month === 12) return '12 Months (1 Year!)';
   return month + ' Months Old';
 }
 function monthShort(month) {
@@ -63,8 +65,8 @@ const ASSET_PATH = 'assets/';
   const lightbox = document.getElementById('lightbox');
   if (!box) return;
 
-  const ranges = { all: [0, 11], '0-3': [0, 3], '4-7': [4, 7], '8-11': [8, 11] };
-  const rangeNames = { all: 'All 12 Milestones (Newborn – 11 Months)', '0-3': '4 Milestones (Newborn – 3 Months)', '4-7': '4 Milestones (4 – 7 Months)', '8-11': '4 Milestones (8 – 11 Months)' };
+  const ranges = { all: [0, 12], '0-3': [0, 3], '4-7': [4, 7], '8-12': [8, 12] };
+  const rangeNames = { all: 'All 13 Milestones (Newborn – 12 Months)', '0-3': '4 Milestones (Newborn – 3 Months)', '4-7': '4 Milestones (4 – 7 Months)', '8-12': '5 Milestones (8 – 12 Months)' };
   let currentFilter = 'all';
   let isPaused = false;
   let currentView = 'marquee';
