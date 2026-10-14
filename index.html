@@ -9,7 +9,7 @@
   <meta property="og:title" content="Eliara Elouise's 1st Birthday | You're Invited" />
   <meta property="og:description" content="Join us October 18, 2026 to celebrate Eliara's 1st Birthday — details, photos & RSVP." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/11months.JPEG" />
+  <meta property="og:image" content="assets/12months.JPG" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%80%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +22,7 @@
   <!-- ============ NAV ============ -->
   <nav class="nav" id="nav">
     <a href="#hero" class="nav__brand" id="nav-brand">
-      <img class="nav__logo nav__logo--img" src="assets/0newborn.JPEG" alt="Eliara Elouise newborn photo" />
+      <img class="nav__logo nav__logo--img" src="assets/12navbar.JPG" alt="Eliara Elouise nav logo" />
       <span><strong>Eliara Elouise</strong><small>1st Birthday Celebration</small></span>
     </a>
     <ul class="nav__links">
@@ -38,7 +38,7 @@
   <header class="hero" id="hero">
     <p class="pill fade-in">✿ You're invited to a sweet celebration ✿</p>
     <div class="hero__avatar fade-in">
-      <img src="assets/11months.JPEG" alt="Eliara Elouise" />
+      <img src="assets/12navbar.JPG" alt="Eliara Elouise at 12 months - hero portrait" />
       <span class="hero__tag">Turning 1!</span>
     </div>
     <h1 class="hero__title fade-in">You're Invited to<br /><em>Eliara Elouise's</em> 1st Birthday!</h1>
@@ -159,19 +159,23 @@
 
       <!-- Interactive Story Carousel (Netlify-style second view) -->
       <div class="carousel fade-in" id="carousel" hidden>
-        <button class="car-arrow" id="car-prev" aria-label="Previous photo">‹</button>
-        <figure class="car-card" id="car-card">
-          <div class="car-media">
-            <img id="car-image" src="assets/0newborn.JPEG" alt="Eliara milestone photo" />
-            <span class="car-badge" id="car-badge">0 Month (Newborn)</span>
-          </div>
-          <figcaption>
-            <h3 id="car-title">Welcome to the World</h3>
-            <p id="car-desc"></p>
-            <span class="car-counter" id="car-counter">1 / 13</span>
-          </figcaption>
-        </figure>
-        <button class="car-arrow" id="car-next" aria-label="Next photo">›</button>
+        <div class="car-stage">
+          <button class="car-arrow" id="car-prev" aria-label="Previous photo">‹</button>
+          <figure class="car-card" id="car-card">
+            <div class="car-media" id="car-media">
+              <img id="car-image" src="assets/0newborn.JPEG" alt="Eliara milestone photo" draggable="false" />
+              <span class="car-badge" id="car-badge">0 Month (Newborn)</span>
+              <span class="car-zoom" aria-hidden="true">⤢ Tap to enlarge</span>
+            </div>
+            <figcaption>
+              <h3 id="car-title">Welcome to the World</h3>
+              <p id="car-desc"></p>
+              <span class="car-counter" id="car-counter">1 / 13</span>
+            </figcaption>
+          </figure>
+          <button class="car-arrow" id="car-next" aria-label="Next photo">›</button>
+        </div>
+        <div class="car-thumbs" id="car-thumbs" role="tablist" aria-label="Choose a month"></div>
         <div class="car-dots" id="car-dots"></div>
       </div>
 

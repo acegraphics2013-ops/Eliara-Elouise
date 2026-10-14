@@ -1,14 +1,15 @@
 /* =========================================================
    CONFIG — edit these values to update the site
    ========================================================= */
-const EVENT_DATE = new Date('2026-10-18T10:00:00'); // ✏️ update time here too
+const EVENT_DATE = new Date('2026-10-18T10:00:00+08:00'); // ✏️ update time here too
 const HOST_EMAIL = 'marchille13@gmail.com'; // ✏️ contact + RSVP messages are emailed here
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + HOST_EMAIL;
 
 // Milestone photos — MONTH IS DERIVED FROM FILENAME (single source of truth)
-// Filenames live in /assets. Leading number = month (0 = newborn, 1..11).
+// Filenames live in /assets. Leading number = month (0 = newborn, 1..12).
 // ✏️ To add/replace a photo, just drop the file in /assets and add its exact
 // filename below — badge, sorting, navigator and counter update automatically.
+// Order below does not matter: PHOTOS is always re-sorted 0 → 12 by filename number.
 const PHOTO_FILES = [
   { file: '0newborn.JPEG',  title: 'Welcome to the World', note: 'The miracle day Eliara was welcomed into our arms with pure wonder and boundless love.' },
   { file: '1month.JPEG',    title: 'Little Bundled Dreamer', note: 'Little bundle of sleepy yawns, tiny fingers, and unconditional love.' },
@@ -48,7 +49,7 @@ function monthLong(month) {
   return month + ' Months';
 }
 
-// Enrich + FORCE chronological order by filename number (0 → 11)
+// Enrich + FORCE chronological order by filename number (0 → 12)
 const PHOTOS = PHOTO_FILES.map(p => {
   const month = parseMonthFromFilename(p.file);
   return { ...p, month, badge: monthBadge(month), short: monthShort(month), long: monthLong(month) };
@@ -81,9 +82,9 @@ const ASSET_PATH = 'assets/';
 
   function cardHTML(p, i, hidden) {
     return `
-      <figure class="photo" data-index="${i}"${hidden ? ' aria-hidden="true"' : ''} tabindex="0" role="button" aria-label="Enlarge ${p.badge} photo">
+      <figure class="photo" data-index="${i}"${hidden ? ' aria-hidden="true"' : ''} tabindex="${hidden ? '-1' : '0'}" role="button" aria-label="Enlarge ${p.badge} photo">
         <div class="photo__media">
-          <img src="${src(p)}" alt="${p.badge} - ${p.title}" loading="lazy" />
+          <img src="${src(p)}" alt="${p.badge} - ${p.title}" loading="lazy" draggable="false" onerror="this.style.opacity='0'" />
           <div class="photo__zoom" aria-hidden="true"><span>⤢</span></div>
           <div class="photo__badge">${p.badge}</div>
         </div>
@@ -106,14 +107,26 @@ const ASSET_PATH = 'assets/';
     if (!items.length) return;
     carIndex = Math.min(carIndex, items.length - 1);
     const p = items[carIndex];
-    document.getElementById('car-image').src = src(p);
-    document.getElementById('car-image').alt = `${p.badge} - ${p.title}`;
+    const carImg = document.getElementById('car-image');
+    carImg.src = src(p);
+    carImg.alt = `${p.badge} - ${p.title}`;
     document.getElementById('car-badge').textContent = p.badge;
     document.getElementById('car-title').textContent = p.title;
     document.getElementById('car-desc').textContent = p.note;
     document.getElementById('car-counter').textContent = `${carIndex + 1} / ${items.length}`;
+    // Re-trigger pop animation on every slide so feedback is visible
+    const card = document.getElementById('car-card');
+    if (card) { card.style.animation = 'none'; void card.offsetWidth; card.style.animation = ''; }
+    // Preload neighbours for instant swipe
+    [carIndex + 1, carIndex - 1].forEach(k => {
+      const n = items[(k + items.length) % items.length];
+      if (n) { const im = new Image(); im.src = src(n); }
+    });
     const dots = document.getElementById('car-dots');
-    dots.innerHTML = items.map((_, i) => `<button data-dot="${i}" class="${i === carIndex ? 'is-active' : ''}" aria-label="Go to photo ${i + 1}"></button>`).join('');
+    if (dots) dots.innerHTML = items.map((_, i) => `<button data-dot="${i}" class="${i === carIndex ? 'is-active' : ''}" aria-label="Go to photo ${i + 1}"></button>`).join('');
+    // Month navigator thumbs — always in filename-number order (NB, 1..12)
+    const thumbs = document.getElementById('car-thumbs');
+    if (thumbs) thumbs.innerHTML = items.map((t, i) => `<button data-thumb="${i}" role="tab" aria-selected="${i === carIndex ? 'true' : 'false'}" class="${i === carIndex ? 'is-active' : ''}" title="${t.badge} - ${t.title}">${t.short}</button>`).join('');
     if (countEl) countEl.textContent = rangeNames[currentFilter];
   }
 
@@ -209,7 +222,14 @@ const ASSET_PATH = 'assets/';
     carIndex = parseInt(d.dataset.dot, 10);
     renderCarousel();
   });
-  // Swipe / drag support for mobile (carousel + lightbox)
+  const thumbsEl = document.getElementById('car-thumbs');
+  if (thumbsEl) thumbsEl.addEventListener('click', e => {
+    const t = e.target.closest('[data-thumb]');
+    if (!t) return;
+    carIndex = parseInt(t.dataset.thumb, 10);
+    renderCarousel();
+  });
+  // Swipe / drag support for mobile + desktop (carousel + lightbox)
   // Horizontal swipe navigates, vertical scroll stays native via touch-action: pan-y
   function addSwipe(el, onLeft, onRight, threshold = 45) {
     if (!el) return;
@@ -233,6 +253,24 @@ const ASSET_PATH = 'assets/';
       }
     }, { passive: true });
     el.addEventListener('touchcancel', () => { tracking = false; }, { passive: true });
+    // Mouse drag for desktop (fully functional on PC too)
+    let mDown = false, mX = 0, mY = 0;
+    el.addEventListener('mousedown', e => {
+      if (e.button !== 0) return;
+      mDown = true; mX = e.clientX; mY = e.clientY;
+    });
+    el.addEventListener('mouseup', e => {
+      if (!mDown) return;
+      mDown = false;
+      const dx = e.clientX - mX;
+      const dy = e.clientY - mY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold) {
+        el.dataset.swiped = String(Date.now());
+        if (dx < 0) onLeft();
+        else onRight();
+      }
+    });
+    el.addEventListener('mouseleave', () => { mDown = false; });
   }
   function wasJustSwiped(el, ms = 350) {
     const t = parseInt(el.dataset.swiped || '0', 10);
@@ -270,6 +308,45 @@ const ASSET_PATH = 'assets/';
   });
 
   render();
+})();
+
+/* ===== Add to calendar (Google Calendar, .ics on Apple devices) ===== */
+(function addToCalendar() {
+  const link = document.getElementById('add-calendar');
+  if (!link) return;
+  const title = "Eliara Elouise's 1st Birthday (Fairy Theme)";
+  const location = 'JBT Resort, Victoria, Tago, Surigao del Sur';
+  const details = 'Fairy First Birthday \u2022 Games, souvenirs & photo op \u2022 Casual attire';
+  const start = EVENT_DATE;
+  const end = new Date(start.getTime() + 3 * 36e5); // assumed 3-hour party
+  const fmt = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const gcal = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent(title)
+    + '&dates=' + fmt(start) + '/' + fmt(end)
+    + '&details=' + encodeURIComponent(details)
+    + '&location=' + encodeURIComponent(location);
+  link.href = gcal;
+  link.target = '_blank';
+  link.rel = 'noopener';
+
+  const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document;
+  if (!isApple) return;
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Eliara//Birthday//EN', 'BEGIN:VEVENT',
+      'UID:eliara-1st-birthday-20261018@eliara', 'DTSTAMP:' + fmt(new Date()),
+      'DTSTART:' + fmt(start), 'DTEND:' + fmt(end),
+      'SUMMARY:' + title, 'LOCATION:' + location.replace(/,/g, '\\,'), 'DESCRIPTION:' + details,
+      'END:VEVENT', 'END:VCALENDAR',
+    ].join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    a.download = 'eliara-1st-birthday.ics';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  });
 })();
 
 /* ===== Fade-in sections on scroll ===== */
